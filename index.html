@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Stopwatch</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -11,6 +12,46 @@
   <button>Start</button>
   <button>Stop</button>
   <button>Reset</button>
+
+  <!-- JavaScript added here -->
+  <script>
+    let timer;
+    let seconds = 0;
+    let running = false;
+
+    function updateTime() {
+      let hrs = String(Math.floor(seconds / 3600)).padStart(2, '0');
+      let mins = String(Math.floor((seconds % 3600) / 60)).padStart(2, '0');
+      let secs = String(seconds % 60).padStart(2, '0');
+      document.querySelector("h1").textContent = `${hrs}:${mins}:${secs}`;
+    }
+
+    function start() {
+      if (!running) {
+        running = true;
+        timer = setInterval(() => {
+          seconds++;
+          updateTime();
+        }, 1000);
+      }
+    }
+
+    function stop() {
+      running = false;
+      clearInterval(timer);
+    }
+
+    function reset() {
+      stop();
+      seconds = 0;
+      updateTime();
+    }
+
+    const buttons = document.querySelectorAll("button");
+    buttons[0].addEventListener("click", start);
+    buttons[1].addEventListener("click", stop);
+    buttons[2].addEventListener("click", reset);
+  </script>
 
 </body>
 </html>
